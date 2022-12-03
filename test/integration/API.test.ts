@@ -14,7 +14,7 @@ test("Deve retornar as colunas de um quadros por meio da API", async function ()
     expect(columns).toHaveLength(4);
     const [column1, column2, column3, column4] = columns;
     expect(column1.name).toBe("Coluna A");
-    expect(column2.name).toBe("Coluna B");
+    expect(column2.hasEstimative).toBe(true);
     expect(column3.name).toBe("Coluna C");
     expect(column4.name).toBe("Coluna D");
 });
