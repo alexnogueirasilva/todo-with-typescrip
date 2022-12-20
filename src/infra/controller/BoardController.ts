@@ -9,10 +9,16 @@ import CardRepositoryDatabase from "../repository/CardRepositoryDatabase";
 
 export default class BoardController {
 
-    constructor(readonly  http: Http, readonly connection: Connection) {
+    constructor(
+        readonly  http: Http,
+        readonly connection: Connection,
+        readonly boardRepository: BoardRepositoryDatabase,
+        readonly columnRepository: ColumnRepositoryDatabase,
+        readonly cardRepository: CardRepositoryDatabase
+    ) {
         http.route("get", "/boards", async function (params: any, body: any) {
             const boardRepository = new BoardRepositoryDatabase(connection);
-            const boardService = new BoardService(boardRepository);
+            const boardService = new BoardService(boardRepository, columnRepository, cardRepository);
             const boards = await boardService.getBoards();
             return boards;
         });
@@ -28,7 +34,6 @@ export default class BoardController {
             const cardRepository = new CardRepositoryDatabase(connection);
             const cardService = new CardService(cardRepository);
             const cards = await cardService.getCards(parseInt(params.idColumn));
-            console.log(cards);
             return cards;
         })
     }
