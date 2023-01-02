@@ -7,6 +7,10 @@ export default class PgPromiseConnection implements Connection {
     constructor() {
         this.connection = pgq()("postgres://postgres:Bruna2012*@localhost:5432/fullstack");
     }
+
+    open(): Promise<void> {
+        return this.connection.$pool.connect();
+    }
     close(): Promise<void> {
         return this.connection.$pool.end();
     }

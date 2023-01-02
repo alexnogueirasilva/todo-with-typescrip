@@ -9,20 +9,20 @@ export default class BoardRepositoryDatabase implements BoardRepository {
 
 
    async findAll(): Promise<Board[]> {
-        const boardsData = await this.connection.query("SELECT id_board, name FROM public.board", []);
+        const boardsData = await this.connection.query("SELECT id_board, name FROM vuejs.board", []);
         const boards: Board[] = [];
 
         for (const boardData of boardsData) {
-            const board = new Board(boardData.name);
+            const board = new Board(boardData.id_board, boardData.name);
             boards.push(board);
         }
         return boards;
     }
 
     async get(idBoard: number): Promise<Board> {
-        const [boardData] = await this.connection.query("SELECT * FROM public.board WHERE id_board = $1", [idBoard]);
+        const [boardData] = await this.connection.query("SELECT * FROM vuejs.board WHERE id_board = $1", [idBoard]);
         if (!boardData) throw new Error("Board não encontrado");
-        const board = new Board(boardData.name);
+        const board = new Board(boardData.id_board, boardData.name);
         return board;
     }
 

@@ -15,6 +15,8 @@ test("Deve Listar os quardos", async function () {
     const [board] = boards;
     expect(board.name).toBe("Project 1");
 
+    await connection.close();
+
 });
 
 test("Deve retornar um quardos", async function () {
