@@ -1,22 +1,18 @@
 import Connection from "./Connection";
-import pgq from "pg-promise";
+import pgp from "pg-promise";
 
 export default class PgPromiseConnection implements Connection {
-    connection: any;
+	connection: any;
 
-    constructor() {
-        this.connection = pgq()("postgres://postgres:Bruna2012*@localhost:5432/fullstack");
-    }
+	constructor () {
+		this.connection = pgp()("postgres://postgres:Bruna2012*@localhost:5432/fullstack");
+	}
 
-    open(): Promise<void> {
-        return this.connection.$pool.connect();
-    }
-    close(): Promise<void> {
-        return this.connection.$pool.end();
-    }
+	query(statement: string, params: any): Promise<any> {
+		return this.connection.query(statement, params);
+	}
 
-    query(statement: string, params: any): Promise<any> {
-        return this.connection.query(statement, params);
-    }
-
+	close(): Promise<void> {
+		return this.connection.$pool.end();
+	}
 }
